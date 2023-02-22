@@ -1,18 +1,14 @@
+require "open-uri"
+
 class GamesController < ApplicationController
 
   def new
-    # display the new grid
-    # display a new form
     @letters = generate_random
-   
   end
 
   def score
-    # word cannot be built out of the original grid
-    # The word is valid according to the grid....but is not valid in ENGLISH
-    # The word is both valid accoding to the grid && is an English word
-     @user_answer = params[:word]
-
+    @word = params[:word]
+    @english_word = english_word?(@word)
   end
 
   private
@@ -22,7 +18,9 @@ class GamesController < ApplicationController
     Array.new(10) { charset.sample }.join
   end
 
-
-
+  def english_word?(word)
+    response = URI.open("https://wagon-dictionary.herokuapp.com/#{word}")
+    json = JSON.parse(response.read)
+    json['found']
+  end
 end
-

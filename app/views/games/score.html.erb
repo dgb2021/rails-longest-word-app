@@ -1,8 +1,14 @@
 <h1>Results</h1>
+<h2>
+  <%= @word %>
+</h2>
+
+<% if @english_word %>
+  <p>Congrats...looks like <%= @word %> is English</p>
+<% else  %>
+  <p> That is not an english word</p>
+<% end %>
 
 
-
-
-<%= @user_answer %>
 
 <%= link_to "<--- Play again", new_path %>
